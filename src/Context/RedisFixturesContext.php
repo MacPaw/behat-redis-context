@@ -13,7 +13,7 @@ class RedisFixturesContext implements Context
 {
     private ClientInterface $redis;
     private string $dataFixturesPath;
-    
+
     public function __construct(
         ClientInterface $redis,
         string $dataFixturesPath = ''
@@ -21,7 +21,7 @@ class RedisFixturesContext implements Context
         $this->redis = $redis;
         $this->dataFixturesPath = $dataFixturesPath;
     }
-    
+
     /**
      * I load fixtures.
      *
@@ -35,27 +35,27 @@ class RedisFixturesContext implements Context
     {
         $aliases = array_map('trim', explode(',', $aliases));
         $fixtures = [];
-        
+
         foreach ($aliases as $alias) {
             $fixture = sprintf('%s/%s.yml', $this->dataFixturesPath, $alias);
-            
+
             if (!is_file($fixture)) {
                 throw new InvalidArgumentException(sprintf('The "%s" redis fixture not found.', $alias));
             }
-            
+
             $fixtures[] = $fixture;
         }
-        
+
         $this->loadFixtures($fixtures);
     }
-    
+
     private function loadFixtures(array $fixtures): void
     {
         foreach ($fixtures as $fixture) {
             $this->loadFile(Yaml::parseFile($fixture));
         }
     }
-    
+
     private function loadFile(array $params): void
     {
         foreach ($params as $key => $value) {

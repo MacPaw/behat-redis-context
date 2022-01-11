@@ -14,12 +14,12 @@ use RuntimeException;
 class RedisContext implements Context
 {
     private ClientInterface $redis;
-    
+
     public function __construct(ClientInterface $redis)
     {
         $this->redis = $redis;
     }
-    
+
     /**
      * Before Scenario.
      *
@@ -29,7 +29,7 @@ class RedisContext implements Context
     {
         $this->redis->flushdb();
     }
-    
+
     /**
      * After Feature.
      *
@@ -39,7 +39,7 @@ class RedisContext implements Context
     {
         gc_collect_cycles();
     }
-    
+
     /**
      * iSaveStringParamsToRedis.
      *
@@ -52,7 +52,7 @@ class RedisContext implements Context
     {
         $this->redis->set($key, $value);
     }
-    
+
     /**
      * iSeeInRedisValueByKay.
      *
@@ -66,21 +66,21 @@ class RedisContext implements Context
     public function iSeeInRedisValueByKay(string $value, string $key): void
     {
         $found = $this->redis->get($key);
-        
+
         if (!$found) {
             throw new InvalidArgumentException(sprintf('In Redis does not data in key "%s"', $key));
         }
-        
+
         if ($value !== $found) {
             throw new InvalidArgumentException(sprintf(
-               'Value in key "%s" do not match "%s" actual "%s"',
-               $key,
-               $value,
-               $found
+                'Value in key "%s" do not match "%s" actual "%s"',
+                $key,
+                $value,
+                $found
             ));
         }
     }
-    
+
     /**
      * Verifies that response should be exactly the same JSON as we expected.
      *
@@ -96,11 +96,11 @@ class RedisContext implements Context
     {
         $actualResponse = $this->redis->hgetall($key);
         $expectedResponse = json_decode(trim($string->getRaw()), true, 512, JSON_THROW_ON_ERROR);
-        
+
         if (array_diff($actualResponse, $expectedResponse)) {
             $prettyJSON = json_encode($actualResponse, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT, 512);
             $message = sprintf("Expected JSON does not match actual JSON:\n%s\n", $prettyJSON);
-            
+
             throw new RuntimeException($message);
         }
     }
