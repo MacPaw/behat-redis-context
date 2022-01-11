@@ -1,0 +1,10 @@
+parameters:
+	ignoreErrors:
+	    -
+	        message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
+	        count: 1
+	        path: ./src/DependencyInjection
+	    -
+	        message: '#.* of method BehatRedisContext\\Context\\RedisFixturesContext::loadFile\(\) expects array, mixed given.#'
+	        count: 1
+	        path: ./src/Context/RedisFixturesContext

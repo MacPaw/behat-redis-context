@@ -95,7 +95,7 @@ class RedisContext implements Context
     public function iSeeInRedisArrayByKey(string $key, PyStringNode $string): void
     {
         $actualResponse = $this->redis->hgetall($key);
-        $expectedResponse = json_decode(trim($string->getRaw()), true, 512, JSON_THROW_ON_ERROR);
+        $expectedResponse = (array) json_decode(trim($string->getRaw()), true, 512, JSON_THROW_ON_ERROR);
 
         if (array_diff($actualResponse, $expectedResponse)) {
             $prettyJSON = json_encode($actualResponse, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT, 512);

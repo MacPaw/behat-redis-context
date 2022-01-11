@@ -37,7 +37,7 @@ class BehatRedisContextExtension extends Extension
     ): void {
         $loader->load('context.xml');
 
-        if ($container->findDefinition('behat_redis_context.redis_fixture_context')) {
+        if ($container->has('behat_redis_context.redis_fixture_context')) {
             $databaseContextDefinition = $container->findDefinition('behat_redis_context.redis_fixture_context');
             $databaseContextDefinition->setArgument('$dataFixturesPath', $config['dataFixturesPath']);
         }
