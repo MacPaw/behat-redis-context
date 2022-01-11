@@ -3,7 +3,7 @@ name: Code style and static analysis
 on:
     pull_request:
     push:
-        branches: [ master, develop ]
+        branches: [ main, develop ]
 
 jobs:
     php-cs-fixer:
