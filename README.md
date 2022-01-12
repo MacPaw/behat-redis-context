@@ -73,6 +73,18 @@ behat_redis_context:
     dataFixturesPath: "your path"
 ```
 
+Step 3: Configure Behat
+=============
+Go to `behat.yml`
+
+```yaml
+...
+  contexts:
+    - BehatRedisContextBundle\Context\RedisContext
+    - BehatRedisContextBundle\Context\RedisFixturesContext
+...
+```
+
 [master Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Amaster
 [master Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=master
 [develop Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Adevelop
