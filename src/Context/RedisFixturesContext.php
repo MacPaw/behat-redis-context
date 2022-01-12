@@ -23,8 +23,6 @@ class RedisFixturesContext implements Context
     }
 
     /**
-     * I load fixtures.
-     *
      * @param string $aliases
      *
      * @throws InvalidArgumentException

@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame([], $configs);
     }
 
-    public function testConfigurationAddFixturePatch(): void
+    public function testConfigurationAddFixturePath(): void
     {
         $processor = new Processor();
         $configuration = new Configuration();

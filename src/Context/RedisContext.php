@@ -21,8 +21,6 @@ class RedisContext implements Context
     }
 
     /**
-     * Before Scenario.
-     *
      * @BeforeScenario
      */
     public function beforeScenario(): void
@@ -31,8 +29,6 @@ class RedisContext implements Context
     }
 
     /**
-     * After Feature.
-     *
      * @AfterFeature
      */
     public static function afterFeature(): void
@@ -41,8 +37,6 @@ class RedisContext implements Context
     }
 
     /**
-     * iSaveStringParamsToRedis.
-     *
      * @param string $value
      * @param string $key
      *
@@ -54,8 +48,6 @@ class RedisContext implements Context
     }
 
     /**
-     * iSeeInRedisValueByKay.
-     *
      * @param string $value
      * @param string $key
      *
@@ -82,8 +74,6 @@ class RedisContext implements Context
     }
 
     /**
-     * Verifies that response should be exactly the same JSON as we expected.
-     *
      * @param string       $key
      * @param PyStringNode $string
      *
