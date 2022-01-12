@@ -57,7 +57,7 @@ class AppKernel extends Kernel
 }
 ```
 
-Created configuration config behat redis context:
+Create configuration for behat redis context:
 
 `config/packages/test/behat_redis_context.yaml `
 ```yaml
