@@ -4,7 +4,7 @@
     xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service autowire="true" id="behat_redis_context.redis_context" class="BehatRedisContext\Context\RedisContext"/>
-        <service autowire="true" id="behat_redis_context.redis_fixture_context" class="BehatRedisContext\Context\RedisFixturesContext"/>
+        <service public="true" autoconfigure="true" autowire="true" id="BehatRedisContext\Context\RedisContext" class="BehatRedisContext\Context\RedisContext"/>
+        <service autoconfigure="true" autowire="true" id="BehatRedisContext\Context\RedisFixturesContext" class="BehatRedisContext\Context\RedisFixturesContext"/>
     </services>
 </container>
