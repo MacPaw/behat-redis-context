@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BehatRedisContext\DependencyInjection;
 
+use BehatRedisContext\Context\RedisFixturesContext;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -36,8 +37,8 @@ class BehatRedisContextExtension extends Extension
     ): void {
         $loader->load('context.xml');
 
-        if ($container->has('behat_redis_context.redis_fixture_context')) {
-            $databaseContextDefinition = $container->findDefinition('behat_redis_context.redis_fixture_context');
+        if ($container->has(RedisFixturesContext::class)) {
+            $databaseContextDefinition = $container->findDefinition(RedisFixturesContext::class);
             $databaseContextDefinition->setArgument('$dataFixturesPath', $config['dataFixturesPath']);
         }
     }
