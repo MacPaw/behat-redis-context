@@ -68,12 +68,25 @@ behat_redis_context:
 
 Step 2: Change path to directory with your fixtures
 ----------------------------------
+`config/packages/test/behat_redis_context.yaml `
 ```yaml
 behat_redis_context:
     dataFixturesPath: "your path"
 ```
 
-Step 3: Configure Behat
+Step 3: Change path to directory with your fixtures
+----------------------------------
+`config/services_test.yaml`
+```yaml
+Predis\ClientInterface: 'Your Redis Client'
+```
+
+Example if you use [Symfony Redis Bundle](https://github.com/symfony-bundles/redis-bundle):
+```yaml
+Predis\ClientInterface: '@SymfonyBundles\RedisBundle\Redis\ClientInterface'
+```
+
+Step 4: Configure Behat
 =============
 Go to `behat.yml`
 
