@@ -3,7 +3,7 @@ Symfony Behat Redis Context
 
 | Version | Build Status | Code Coverage |
 |:---------:|:-------------:|:-----:|
-| `master`| [![CI][master Build Status Image]][master Build Status] | [![Coverage Status][master Code Coverage Image]][master Code Coverage] |
+| `main`| [![CI][main Build Status Image]][main Build Status] | [![Coverage Status][main Code Coverage Image]][main Code Coverage] |
 | `develop`| [![CI][develop Build Status Image]][develop Build Status] | [![Coverage Status][develop Code Coverage Image]][develop Code Coverage] |
 
 Installation
@@ -98,11 +98,11 @@ Go to `behat.yml`
 ...
 ```
 
-[master Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Amaster
-[master Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=master
+[main Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Amain
+[main Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=main
 [develop Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Adevelop
 [develop Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=develop
-[master Code Coverage]: https://codecov.io/gh/macpaw/BehatRedisContext/branch/master
-[master Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/BehatRedisContext/master?logo=codecov
+[main Code Coverage]: https://codecov.io/gh/macpaw/BehatRedisContext/branch/main
+[main Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/BehatRedisContext/main?logo=codecov
 [develop Code Coverage]: https://codecov.io/gh/macpaw/BehatRedisContext/branch/develop
 [develop Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/BehatRedisContext/develop?logo=codecov
