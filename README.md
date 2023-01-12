@@ -102,7 +102,7 @@ Go to `behat.yml`
 [main Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=main
 [develop Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Adevelop
 [develop Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=develop
-[main Code Coverage]: https://codecov.io/gh/macpaw/BehatRedisContext/branch/main
-[main Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/BehatRedisContext/main?logo=codecov
-[develop Code Coverage]: https://codecov.io/gh/macpaw/BehatRedisContext/branch/develop
-[develop Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/BehatRedisContext/develop?logo=codecov
+[main Code Coverage]: https://codecov.io/gh/macpaw/behat-redis-context/branch/main
+[main Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/behat-redis-context/main?logo=codecov
+[develop Code Coverage]: https://codecov.io/gh/macpaw/behat-redis-context/branch/develop
+[develop Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/behat-redis-context/develop?logo=codecov
