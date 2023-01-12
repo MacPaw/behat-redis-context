@@ -93,8 +93,8 @@ Go to `behat.yml`
 ```yaml
 ...
   contexts:
-    - BehatRedisContextBundle\Context\RedisContext
-    - BehatRedisContextBundle\Context\RedisFixturesContext
+    - BehatRedisContext\Context\RedisContext
+    - BehatRedisContext\Context\RedisFixturesContext
 ...
 ```
 
