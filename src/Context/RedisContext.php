@@ -55,12 +55,12 @@ class RedisContext implements Context
      *
      * @When /^I see in redis value "([^"]*)" by key "([^"]*)"$/
      */
-    public function iSeeInRedisValueByKay(string $value, string $key): void
+    public function iSeeInRedisValueByKey(string $value, string $key): void
     {
         $found = $this->redis->get($key);
 
         if (!$found) {
-            throw new InvalidArgumentException(sprintf('In Redis does not data in key "%s"', $key));
+            throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
         }
 
         if ($value !== $found) {
@@ -70,6 +70,18 @@ class RedisContext implements Context
                 $value,
                 $found
             ));
+        }
+    }
+
+    /**
+     * @When /^I don't see in redis value by key "([^"]*)"$/
+     */
+    public function iDontSeeInRedisValueByKey(string $key): void
+    {
+        $found = $this->redis->get($key);
+
+        if ($found) {
+            throw new InvalidArgumentException(sprintf('Redis contains data for key "%s"', $key));
         }
     }
 
