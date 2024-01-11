@@ -17,9 +17,8 @@ jobs:
                 coverage: ['none']
                 symfony-versions:
                     - '5.4.*'
-                    - '6.0.*'
-                    - '6.1.*'
-                    - '6.2.*'
+                    - '6.4.*'
+                    - '7.0.*'
                 include:
                     - php: '7.4'
                       symfony-versions: '^5.4'
@@ -27,13 +26,10 @@ jobs:
                     - php: '8.0'
                       symfony-versions: '^5.4'
                       coverage: 'none'
-                    - php: '8.0'
-                      symfony-versions: '^6.0'
-                      coverage: 'none'
                     - description: 'Log Code Coverage'
                       php: '8.2'
                       coverage: 'xdebug'
-                      symfony-versions: '^6.2'
+                      symfony-versions: '^7.0'
 
         name: PHP ${{ matrix.php }} Symfony ${{ matrix.symfony-versions }} ${{ matrix.description }}
         steps:
