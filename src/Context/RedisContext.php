@@ -48,6 +48,14 @@ class RedisContext implements Context
     }
 
     /**
+     * @When /^I save serialized value "([^"]*)" to redis by "([^"]*)"$/
+     */
+    public function iSaveSerializedParamsToRedis(string $value, string $key): void
+    {
+        $this->redis->set($key, serialize($value));
+    }
+
+    /**
      * @param string $value
      * @param string $key
      *
@@ -104,6 +112,44 @@ class RedisContext implements Context
             $message = sprintf("Expected JSON does not match actual JSON:\n%s\n", $prettyJSON);
 
             throw new RuntimeException($message);
+        }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     *
+     * @When /^I see in redis any value by key "([^"]*)"$/
+     */
+    public function iSeeInRedisAnyValueByKey(string $key): void
+    {
+        $found = $this->redis->get($key);
+
+        if (null === $found) {
+            throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
+        }
+    }
+
+    /**
+     * @When /^I see in redis serialized value "([^"]*)" by key "([^"]*)"$/
+     */
+    public function iSeeInRedisSerializedValueByKey(string $value, string $key): void
+    {
+        $found = $this->redis->get($key);
+
+        if (null === $found) {
+            throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
+        }
+
+        /** @var string $found */
+        $found = unserialize($found);
+
+        if ($value !== $found) {
+            throw new InvalidArgumentException(sprintf(
+                'Value in key "%s" do not match "%s" actual "%s"',
+                $key,
+                $value,
+                $found,
+            ));
         }
     }
 }
