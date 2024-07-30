@@ -29,7 +29,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "behat/behat": "^3.0",
-        "predis/predis": "^1.0",
+        "predis/predis": "^1.0||^2.0",
         "symfony/yaml": "^4.3 || ^5.0 || ^6.0 || ^7.0",
         "symfony/dependency-injection": "^4.3 || ^5.0 || ^6.0 || ^7.0",
         "symfony/http-kernel": "^4.3 || ^5.0 || ^6.0 || ^7.0"
