@@ -14,7 +14,7 @@ class RedisFixturesContextTest extends TestCase
     public function testServiceNotFound(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('The "Test" redis fixture not found.');
+        $this->expectExceptionMessage('The "Test" redis fixture not found.');
 
         $redisFixtureContext = new RedisFixturesContext(new Client());
 
