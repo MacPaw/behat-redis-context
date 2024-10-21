@@ -1,102 +1,65 @@
-Symfony Behat Redis Context
-=================================
-
+# Symfony Behat Redis Context
 | Version | Build Status | Code Coverage |
 |:---------:|:-------------:|:-----:|
 | `main`| [![CI][main Build Status Image]][main Build Status] | [![Coverage Status][main Code Coverage Image]][main Code Coverage] |
 | `develop`| [![CI][develop Build Status Image]][develop Build Status] | [![Coverage Status][develop Code Coverage Image]][develop Code Coverage] |
 
-Installation
-============
+Symfony Behat Redis Context is a package that integrates Redis operations with Behat for behavior-driven development (BDD). This context allows you to store, retrieve, and validate data in Redis as part of your Behat testing scenarios. It's useful when testing applications that depend on Redis for caching, session storage, or data management.
 
-Step 1: Download the Bundle
-----------------------------------
-Open a command console, enter your project directory and execute:
+This documentation provides step-by-step guides for installing the package and utilizing each Redis-related step within Behat scenarios.
 
-###  Applications that use Symfony Flex [in progress](https://github.com/MacPaw/BehatRedisContext/issues/2)
+## How to Install Symfony Behat Redis Context
 
-```console
-$ composer require --dev macpaw/behat-redis-context
-```
+To install Symfony Behat Redis Context, follow these steps:
 
-### Applications that don't use Symfony Flex
+1. Add the package to your project using composer:
+   ```bash
+   composer require --dev macpaw/behat-redis-context
 
-Open a command console, enter your project directory and execute the
-following command to download the latest stable version of this bundle:
+For detailed steps and configuration, refer to the [Installation Steps](docs/install.md)
 
-```console
-$ composer require --dev macpaw/behat-redis-context
-```
+## RedisContext Documentation
 
-This command requires you to have Composer installed globally, as explained
-in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-of the Composer documentation.
+Below are the available Redis operations that you can use in your Behat tests. Each step integrates seamlessly with Redis to ensure data is stored, retrieved, or validated as expected.
 
+### Redis Step Definitions:
 
-Then, enable the bundle by adding it to the list of registered bundles
-in the `app/AppKernel.php` file of your project:
+* [Check Any Value by Redis Key](docs/RedisContext/check-any-value-by-key.md)  
+  Verifies if any value is stored in Redis under a specific key.
 
-```php
-<?php
-// app/AppKernel.php
+* [Check Array Value Stored in Redis](docs/RedisContext/check-array.md)  
+  Ensures that the stored array or hash in Redis matches the expected structure.
 
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            BehatRedisContextBundle\BehatRedisContextBundle::class => ['test' => true],
-        );
+* [Check if Key Exists in Redis](docs/RedisContext/check-key-exist.md)  
+  Checks whether a specific key exists in Redis.
 
-        // ...
-    }
+* [Check Serialized Value in Redis](docs/RedisContext/check-serialized-value.md)  
+  Verifies that a serialized value stored in Redis matches the expected serialized value.
 
-    // ...
-}
-```
+* [Check String Value in Redis](docs/RedisContext/check-value-in-redis.md)  
+  Validates if a string value in Redis matches the expected value.
 
-Create configuration for behat redis context:
+* [Clean Redis Database in Test](docs/RedisContext/clean-db.md)  
+  Automatically flushes the Redis database before running a scenario to ensure a clean state.
 
-`config/packages/test/behat_redis_context.yaml `
-```yaml
-behat_redis_context:
-    dataFixturesPath: ""
-```
+* [Store Serialized Value in Redis](docs/RedisContext/store-seralized-value.md)  
+  Serializes and stores a value in Redis with a given key.
 
+* [Store String Value in Redis](docs/RedisContext/store-string-value.md)  
+  Stores a simple string value in Redis under the specified key.
 
-Step 2: Change path to directory with your fixtures
-----------------------------------
-`config/packages/test/behat_redis_context.yaml `
-```yaml
-behat_redis_context:
-    dataFixturesPath: "your path"
-```
+## RedisFixtureContext Documentation
 
-Step 3: Change path to directory with your fixtures
-----------------------------------
-`config/services_test.yaml`
-```yaml
-Predis\ClientInterface: 'Your Redis Client'
-```
+Here you can find detailed documentation about using Redis fixtures in Behat:
 
-Example if you use [Symfony Redis Bundle](https://github.com/symfony-bundles/redis-bundle):
-```yaml
-Predis\ClientInterface: '@SymfonyBundles\RedisBundle\Redis\ClientInterface'
-```
+1. **[How It Works](docs/RedisFixtures/how-works.md)**  
+   Learn about the inner workings of the RedisFixtureContext and how it integrates with your Behat tests.
 
-Step 4: Configure Behat
-=============
-Go to `behat.yml`
+2. **[How to Load Fixture Data into Redis](docs/RedisFixtures/how-load-fixture-in-redis.md)**  
+   A step-by-step guide on how to load predefined data fixtures into Redis using YAML files in Behat.
 
-```yaml
-...
-  contexts:
-    - BehatRedisContext\Context\RedisContext
-    - BehatRedisContext\Context\RedisFixturesContext
-...
-```
+3. **[Handling Missing Fixture Files](docs/RedisFixtures/handling-missing-fixtures.md)**  
+   What to do when a specified fixture file is missing and how to handle such errors in your tests.
 
 [main Build Status]: https://github.com/macpaw/BehatRedisContext/actions?query=workflow%3ACI+branch%3Amain
 [main Build Status Image]: https://github.com/macpaw/BehatRedisContext/workflows/CI/badge.svg?branch=main

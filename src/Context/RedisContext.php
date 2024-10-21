@@ -82,9 +82,9 @@ class RedisContext implements Context
     }
 
     /**
-     * @When /^I don't see in redis value by key "([^"]*)"$/
+     * @When /^I don't see in redis key "([^"]*)"$/
      */
-    public function iDontSeeInRedisValueByKey(string $key): void
+    public function iDontSeeInRedisKey(string $key): void
     {
         $found = $this->redis->get($key);
 
