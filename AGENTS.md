@@ -17,10 +17,9 @@ All commands are defined in `composer.json` scripts section:
 | `composer dev-checks` | Run all checks (validate + phpstan + phpunit + code-style) |
 | `composer validate` | Validate composer.json |
 
-### Known issues
+### Notes
 
-- PHPStan has a pre-existing baseline mismatch: the ignored error pattern for `NodeDefinition::children()` in `phpstan-baseline.neon` no longer matches with current Symfony versions. This causes `composer phpstan` to exit with code 1. This is a repo issue, not an environment issue.
-- The `checkMissingIterableValueType` config option in `phpstan.neon.dist` is deprecated in newer PHPStan versions.
+- PHPStan 1.x is currently used; an upgrade to 2.x is available but not yet applied.
 
 ### Environment notes
 
