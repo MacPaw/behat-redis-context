@@ -47,13 +47,28 @@ class RedisFixturesContext implements Context
         $this->loadFixtures($fixtures);
     }
 
+    /**
+     * @param array<string> $fixtures
+     */
     private function loadFixtures(array $fixtures): void
     {
         foreach ($fixtures as $fixture) {
-            $this->loadFile(Yaml::parseFile($fixture));
+            /** @var mixed $parsed */
+            $parsed = Yaml::parseFile($fixture);
+
+            if (!is_array($parsed)) {
+                throw new InvalidArgumentException(
+                    sprintf('The "%s" fixture file must contain a YAML array.', $fixture)
+                );
+            }
+
+            $this->loadFile($parsed);
         }
     }
 
+    /**
+     * @param array<string, string|array<string, string>> $params
+     */
     private function loadFile(array $params): void
     {
         foreach ($params as $key => $value) {

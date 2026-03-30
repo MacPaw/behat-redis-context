@@ -1,6 +1,0 @@
-parameters:
-	ignoreErrors:
-	    -
-	        message: '#.* of method BehatRedisContext\\Context\\RedisFixturesContext::loadFile\(\) expects array, mixed given.#'
-	        count: 1
-	        path: ./src/Context/RedisFixturesContext
