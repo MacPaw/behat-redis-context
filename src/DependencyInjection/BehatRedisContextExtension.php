@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class BehatRedisContextExtension extends Extension
 {
     /**
-     * @param array<array> $configs
+     * @param array<array<string, mixed>> $configs
      *
      * {@inheritdoc}
      */
@@ -28,7 +28,7 @@ class BehatRedisContextExtension extends Extension
     }
 
     /**
-     * @param array<array> $config
+     * @param array<string, mixed> $config
      */
     private function loadBehatDatabaseContext(
         array $config,

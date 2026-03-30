@@ -20,4 +20,22 @@ class RedisFixturesContextTest extends TestCase
 
         $redisFixtureContext->loadRedisFixtures('Test');
     }
+
+    public function testInvalidFixtureFileThrowsException(): void
+    {
+        $tmpDir = sys_get_temp_dir() . '/behat_redis_test_' . uniqid();
+        mkdir($tmpDir, 0777, true);
+        file_put_contents($tmpDir . '/scalar.yml', 'just a string');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('fixture file must contain a YAML array');
+
+        try {
+            $redisFixtureContext = new RedisFixturesContext(new Client(), $tmpDir);
+            $redisFixtureContext->loadRedisFixtures('scalar');
+        } finally {
+            unlink($tmpDir . '/scalar.yml');
+            rmdir($tmpDir);
+        }
+    }
 }
