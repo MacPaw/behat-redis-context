@@ -11,27 +11,18 @@ use Symfony\Component\Yaml\Yaml;
 
 class RedisFixturesContext implements Context
 {
-    private ClientInterface $redis;
-    private string $dataFixturesPath;
-
-    public function __construct(
-        ClientInterface $redis,
-        string $dataFixturesPath = ''
-    ) {
-        $this->redis = $redis;
-        $this->dataFixturesPath = $dataFixturesPath;
+    public function __construct(private readonly ClientInterface $redis, private readonly string $dataFixturesPath = '')
+    {
     }
 
     /**
-     * @param string $aliases
      *
      * @throws InvalidArgumentException
-     *
      * @Given /^I load redis fixtures "([^\"]*)"$/
      */
     public function loadRedisFixtures(string $aliases): void
     {
-        $aliases = array_map('trim', explode(',', $aliases));
+        $aliases = array_map(trim(...), explode(',', $aliases));
         $fixtures = [];
 
         foreach ($aliases as $alias) {
@@ -53,7 +44,6 @@ class RedisFixturesContext implements Context
     private function loadFixtures(array $fixtures): void
     {
         foreach ($fixtures as $fixture) {
-            /** @var mixed $parsed */
             $parsed = Yaml::parseFile($fixture);
 
             if (!is_array($parsed)) {
@@ -62,8 +52,47 @@ class RedisFixturesContext implements Context
                 );
             }
 
-            $this->loadFile($parsed);
+            $this->loadFile($this->normalizeFixturePayload($parsed));
         }
+    }
+
+    /**
+     * @param array<mixed> $parsed
+     *
+     * @return array<string, string|array<string, string>>
+     */
+    private function normalizeFixturePayload(array $parsed): array
+    {
+        $normalized = [];
+
+        foreach ($parsed as $key => $value) {
+            if (!is_string($key)) {
+                throw new InvalidArgumentException('Fixture keys must be strings.');
+            }
+
+            if (is_string($value)) {
+                $normalized[$key] = $value;
+
+                continue;
+            }
+
+            if (!is_array($value)) {
+                throw new InvalidArgumentException(sprintf('Invalid value type for fixture key "%s".', $key));
+            }
+
+            $hash = [];
+            foreach ($value as $field => $fieldValue) {
+                if (!is_string($field) || !is_string($fieldValue)) {
+                    throw new InvalidArgumentException(sprintf('Invalid hash entry for fixture key "%s".', $key));
+                }
+
+                $hash[$field] = $fieldValue;
+            }
+
+            $normalized[$key] = $hash;
+        }
+
+        return $normalized;
     }
 
     /**

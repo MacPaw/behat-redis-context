@@ -13,11 +13,8 @@ use RuntimeException;
 
 class RedisContext implements Context
 {
-    private ClientInterface $redis;
-
-    public function __construct(ClientInterface $redis)
+    public function __construct(private readonly ClientInterface $redis)
     {
-        $this->redis = $redis;
     }
 
     /**
@@ -37,8 +34,6 @@ class RedisContext implements Context
     }
 
     /**
-     * @param string $value
-     * @param string $key
      *
      * @When /^I save string value "([^"]*)" to redis by "([^"]*)"$/
      */
@@ -56,8 +51,6 @@ class RedisContext implements Context
     }
 
     /**
-     * @param string $value
-     * @param string $key
      *
      * @throws InvalidArgumentException
      *
@@ -65,9 +58,9 @@ class RedisContext implements Context
      */
     public function iSeeInRedisValueByKey(string $value, string $key): void
     {
-        $found = $this->redis->get($key);
+        $found = $this->getRedisStringValue($key);
 
-        if (!$found) {
+        if ($found === null || $found === '') {
             throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
         }
 
@@ -86,16 +79,14 @@ class RedisContext implements Context
      */
     public function iDontSeeInRedisKey(string $key): void
     {
-        $found = $this->redis->get($key);
+        $found = $this->getRedisStringValue($key);
 
-        if ($found) {
+        if ($found !== null && $found !== '') {
             throw new InvalidArgumentException(sprintf('Redis contains data for key "%s"', $key));
         }
     }
 
     /**
-     * @param string       $key
-     * @param PyStringNode $string
      *
      * @throws JsonException
      * @throws RuntimeException
@@ -104,8 +95,14 @@ class RedisContext implements Context
      */
     public function iSeeInRedisArrayByKey(string $key, PyStringNode $string): void
     {
-        $actualResponse = $this->redis->hgetall($key);
-        $expectedResponse = (array) json_decode(trim($string->getRaw()), true, 512, JSON_THROW_ON_ERROR);
+        $actualRaw = $this->redis->hgetall($key);
+        $decoded = json_decode(trim($string->getRaw()), true, 512, JSON_THROW_ON_ERROR);
+        if (!is_array($decoded)) {
+            throw new RuntimeException('Expected JSON object for Redis hash comparison.');
+        }
+
+        $actualResponse = array_map([self::class, 'stringifyForComparison'], $actualRaw);
+        $expectedResponse = array_map([self::class, 'stringifyForComparison'], $decoded);
 
         if (array_diff($actualResponse, $expectedResponse)) {
             $prettyJSON = json_encode($actualResponse, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT, 512);
@@ -115,6 +112,19 @@ class RedisContext implements Context
         }
     }
 
+    private static function stringifyForComparison(mixed $value): string
+    {
+        if (is_string($value)) {
+            return $value;
+        }
+
+        if (is_scalar($value)) {
+            return (string) $value;
+        }
+
+        throw new RuntimeException('Expected scalar values in Redis hash comparison.');
+    }
+
     /**
      * @throws InvalidArgumentException
      *
@@ -122,9 +132,8 @@ class RedisContext implements Context
      */
     public function iSeeInRedisAnyValueByKey(string $key): void
     {
-        $found = $this->redis->get($key);
-
-        if (null === $found) {
+        $found = $this->getRedisStringValue($key);
+        if ($found === null) {
             throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
         }
     }
@@ -134,22 +143,42 @@ class RedisContext implements Context
      */
     public function iSeeInRedisSerializedValueByKey(string $value, string $key): void
     {
-        $found = $this->redis->get($key);
+        $found = $this->getRedisStringValue($key);
 
-        if (null === $found) {
+        if ($found === null) {
             throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
         }
 
-        /** @var string $found */
-        $found = unserialize($found);
+        $unserialized = unserialize($found);
+        if (!is_string($unserialized)) {
+            throw new InvalidArgumentException(sprintf('In Redis does not exist data for key "%s"', $key));
+        }
 
-        if ($value !== $found) {
+        if ($value !== $unserialized) {
             throw new InvalidArgumentException(sprintf(
                 'Value in key "%s" do not match "%s" actual "%s"',
                 $key,
                 $value,
-                $found,
+                $unserialized,
             ));
         }
+    }
+
+    /**
+     * Predis 1.x documents {@see ClientInterface::get()} as `string`; newer releases use `string|null`.
+     */
+    private function getRedisStringValue(string $key): ?string
+    {
+        $value = $this->redis->get($key);
+
+        if ($value === null || $value === false) {
+            return null;
+        }
+
+        if (!is_string($value)) {
+            throw new InvalidArgumentException(sprintf('Unexpected Redis response for key "%s".', $key));
+        }
+
+        return $value;
     }
 }

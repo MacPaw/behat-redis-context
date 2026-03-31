@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class BehatRedisContextExtensionTest extends TestCase
+final class BehatRedisContextExtensionTest extends TestCase
 {
     public function testHasServices(): void
     {
