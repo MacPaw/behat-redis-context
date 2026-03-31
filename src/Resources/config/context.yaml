@@ -1,0 +1,9 @@
+services:
+    BehatRedisContext\Context\RedisContext:
+        public: true
+        autoconfigure: true
+        autowire: true
+
+    BehatRedisContext\Context\RedisFixturesContext:
+        autoconfigure: true
+        autowire: true
