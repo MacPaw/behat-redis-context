@@ -7,13 +7,13 @@ namespace BehatRedisContext\DependencyInjection;
 use BehatRedisContext\Context\RedisFixturesContext;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class BehatRedisContextExtension extends Extension
 {
     /**
-     * @param array<array> $configs
+     * @param array<array<string, mixed>> $configs
      *
      * {@inheritdoc}
      */
@@ -22,20 +22,20 @@ class BehatRedisContextExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $this->loadBehatDatabaseContext($config, $loader, $container);
     }
 
     /**
-     * @param array<array> $config
+     * @param array<mixed> $config
      */
     private function loadBehatDatabaseContext(
         array $config,
-        XmlFileLoader $loader,
+        YamlFileLoader $loader,
         ContainerBuilder $container
     ): void {
-        $loader->load('context.xml');
+        $loader->load('context.yaml');
 
         if ($container->has(RedisFixturesContext::class)) {
             $databaseContextDefinition = $container->findDefinition(RedisFixturesContext::class);

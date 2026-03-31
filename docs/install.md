@@ -73,7 +73,7 @@ Step 3: Change path to directory with your fixtures
 Predis\ClientInterface: 'Your Redis Client'
 ```
 
-Example if you use [Symfony Redis Bundle](https://github.com/php-bundles/redis-bundle):
+Example if you use [Symfony Redis Bundle](https://github.com/symfony-bundles/redis-bundle):
 ```yaml
 Predis\ClientInterface: '@SymfonyBundles\RedisBundle\Redis\ClientInterface'
 ```

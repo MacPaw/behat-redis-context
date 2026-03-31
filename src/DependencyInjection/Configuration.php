@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BehatRedisContext\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -13,9 +14,10 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('behat_redis_context');
-        $root = $treeBuilder->getRootNode()->children();
+        $rootNode = $treeBuilder->getRootNode();
+        assert($rootNode instanceof ArrayNodeDefinition);
 
-        $this->addDataFixturesPathSection($root);
+        $this->addDataFixturesPathSection($rootNode->children());
 
         return $treeBuilder;
     }

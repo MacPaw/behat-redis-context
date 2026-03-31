@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class ConfigurationTest extends TestCase
+final class ConfigurationTest extends TestCase
 {
     public function testConfiguration(): void
     {
