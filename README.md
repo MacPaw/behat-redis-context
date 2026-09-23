@@ -1,4 +1,7 @@
 # Symfony Behat Redis Context
+
+![Behat Redis Context](.github/header.png)
+
 | Version | Build Status | Code Coverage |
 |:---------:|:-------------:|:-----:|
 | `main`| [![CI][main Build Status Image]][main Build Status] | [![Coverage Status][main Code Coverage Image]][main Code Coverage] |
